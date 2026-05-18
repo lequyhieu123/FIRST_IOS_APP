@@ -5,4 +5,20 @@
 //  Created by Trà My Dương on 18/5/2026.
 //
 
-import Foundation
+import UIKit
+
+class RoomDetailViewController: UIViewController
+{
+    var house: House?
+    var room: Room?
+
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+
+        if let room = room
+        {
+            print("Opened room: \(room.name)")
+        }
+    }
+}

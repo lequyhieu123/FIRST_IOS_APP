@@ -42,7 +42,14 @@ class HouseListViewController: UIViewController,
 
     @IBAction func backPressed(_ sender: Any)
     {
-        navigationController?.popViewController(animated: true)
+        if let navigationController = navigationController
+        {
+            navigationController.popViewController(animated: true)
+        }
+        else
+        {
+            dismiss(animated: true, completion: nil)
+        }
     }
 
     @IBAction func allPressed(_ sender: Any)

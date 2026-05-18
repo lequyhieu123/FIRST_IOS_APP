@@ -1,23 +1,17 @@
-//
-//  RoomTableViewCell.swift
-//  FIRST_IOS_APP
-//
-//  Created by Trà My Dương on 18/5/2026.
-//
-
 import UIKit
 
-class RoomTableViewCell: UITableViewCell {
+class RoomTableViewCell: UITableViewCell
+{
+    @IBOutlet weak var doneSwitch: UISwitch!
+    @IBOutlet weak var roomNameLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var arrowButton: UIButton!
 
-    override func awakeFromNib() {
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
-        // Initialization code
+
+        roomNameLabel.numberOfLines = 2
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
