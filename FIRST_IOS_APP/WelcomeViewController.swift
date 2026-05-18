@@ -16,8 +16,9 @@ class WelcomeViewController: UIViewController
     @IBAction func okPressed(_ sender: Any)
     {
         let name = nameField.text ?? ""
+        let cleanName = name.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        if name.isEmpty
+        if cleanName.isEmpty
         {
             let alert = UIAlertController(
                 title: "Missing Name",
@@ -35,7 +36,8 @@ class WelcomeViewController: UIViewController
         }
         else
         {
-            print("User entered name: \(name)")
+            print("User entered name: \(cleanName)")
+            performSegue(withIdentifier: "showHouseList", sender: self)
         }
     }
 }

@@ -1,8 +1,16 @@
-//
-//  HouseDetailViewController.swift
-//  FIRST_IOS_APP
-//
-//  Created by Trà My Dương on 17/5/2026.
-//
+import UIKit
 
-import Foundation
+class HouseDetailViewController: UIViewController
+{
+    var house: House?
+
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+
+        if let house = house
+        {
+            print("Opened house: \(house.nickname)")
+        }
+    }
+}

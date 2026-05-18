@@ -1,23 +1,20 @@
-//
-//  HouseTableViewCell.swift
-//  FIRST_IOS_APP
-//
-//  Created by Trà My Dương on 17/5/2026.
-//
-
 import UIKit
 
-class HouseTableViewCell: UITableViewCell {
+class HouseTableViewCell: UITableViewCell
+{
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var arrowButton: UIButton!
 
-    override func awakeFromNib() {
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
-        // Initialization code
+
+        nameLabel.numberOfLines = 2
+
+        editButton.setTitle("Edit", for: .normal)
+        deleteButton.setTitle("X", for: .normal)
+        arrowButton.setTitle(">", for: .normal)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

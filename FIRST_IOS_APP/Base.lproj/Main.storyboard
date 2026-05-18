@@ -8,6 +8,227 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--House List View Controller-->
+        <scene sceneID="yOy-pi-xIN">
+            <objects>
+                <viewController id="lv9-st-F65" customClass="HouseListViewController" customModule="FIRST_IOS_APP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QJR-g1-n0a">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" id="SGr-vH-9nI">
+                                <rect key="frame" x="12" y="59" width="353" height="738"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ul5-bU-ULh">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="W5f-hR-jq0"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="BACK"/>
+                                        <connections>
+                                            <action selector="backPressed:" destination="lv9-st-F65" eventType="touchUpInside" id="gQK-PV-NZa"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="House list" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FOK-8w-3Qc">
+                                        <rect key="frame" x="0.0" y="40" width="353" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="mOx-4B-c2K">
+                                        <rect key="frame" x="0.0" y="64.333333333333343" width="353" height="87.333333333333343"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⚪ No rooms added" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BlP-mW-9e8">
+                                                <rect key="frame" x="0.0" y="0.0" width="154" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🔴 Not started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sr7-Kt-Qx5">
+                                                <rect key="frame" x="0.0" y="22.333333333333336" width="113.66666666666667" height="20.333333333333336"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🟡 In progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eqt-Bt-Rtz">
+                                                <rect key="frame" x="0.0" y="44.666666666666664" width="112.66666666666667" height="20.333333333333336"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🟢 Done" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBQ-DS-Uj1">
+                                                <rect key="frame" x="0.0" y="67" width="67.666666666666671" height="20.333333333333329"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total houses" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJQ-Hn-K8i">
+                                        <rect key="frame" x="0.0" y="155.66666666666666" width="353" height="20.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="CgS-7j-nm6">
+                                        <rect key="frame" x="0.0" y="180" width="353" height="64"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="lv9-st-F65" id="5ME-Td-YHe"/>
+                                        </connections>
+                                    </searchBar>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7BO-Vb-XfV">
+                                        <rect key="frame" x="0.0" y="248.00000000000003" width="353" height="34.333333333333343"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gXF-C7-Z9O">
+                                                <rect key="frame" x="0.0" y="0.0" width="176.66666666666666" height="34.333333333333336"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="All"/>
+                                                <connections>
+                                                    <action selector="allPressed:" destination="lv9-st-F65" eventType="touchUpInside" id="4LC-9d-gTG"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaQ-Ux-HA0">
+                                                <rect key="frame" x="176.66666666666663" y="0.0" width="176.33333333333337" height="34.333333333333336"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Done"/>
+                                                <connections>
+                                                    <action selector="donePressed:" destination="lv9-st-F65" eventType="touchUpInside" id="3Uf-cA-gnq"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MtA-MB-bga">
+                                        <rect key="frame" x="0.0" y="286.33333333333331" width="353" height="34.333333333333314"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KTp-rO-1PD">
+                                                <rect key="frame" x="0.0" y="0.0" width="176.66666666666666" height="34.333333333333336"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="In progress"/>
+                                                <connections>
+                                                    <action selector="progressPressed:" destination="lv9-st-F65" eventType="touchUpInside" id="1YG-je-xDy"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="boJ-7k-W9Y">
+                                                <rect key="frame" x="176.66666666666663" y="0.0" width="176.33333333333337" height="34.333333333333336"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="Done"/>
+                                                <connections>
+                                                    <action selector="notStartedPressed:" destination="lv9-st-F65" eventType="touchUpInside" id="lyK-4S-JBp"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleAspectFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" estimatedRowHeight="56" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0ic-xd-XyF">
+                                        <rect key="frame" x="0.0" y="324.66666666666669" width="353" height="337.00000000000006"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HouseTableViewCell" rowHeight="56" id="dZg-hm-fS9" customClass="HouseTableViewCell" customModule="FIRST_IOS_APP" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="50" width="353" height="56"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dZg-hm-fS9" id="Djm-1l-vCV">
+                                                    <rect key="frame" x="0.0" y="0.0" width="353" height="56"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Wqs-fq-xen">
+                                                            <rect key="frame" x="8" y="6" width="337" height="44"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mb6-Wv-X3O">
+                                                                    <rect key="frame" x="0.0" y="11.999999999999998" width="191" height="20.333333333333329"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wRk-NR-1xE">
+                                                                    <rect key="frame" x="197" y="5" width="56" height="34.333333333333336"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="56" id="mKq-2P-lNs"/>
+                                                                    </constraints>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="Edit"/>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1k-U1-IJ9">
+                                                                    <rect key="frame" x="259" y="5" width="36" height="34.333333333333336"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="36" id="RAH-a1-nDp"/>
+                                                                    </constraints>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="X"/>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUF-Fh-yp3">
+                                                                    <rect key="frame" x="301" y="5" width="36" height="34.333333333333336"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="36" id="ZJO-6O-a0Q"/>
+                                                                    </constraints>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="&gt;"/>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="Wqs-fq-xen" firstAttribute="leading" secondItem="Djm-1l-vCV" secondAttribute="leading" constant="8" id="662-lc-WAd"/>
+                                                        <constraint firstItem="Wqs-fq-xen" firstAttribute="top" secondItem="Djm-1l-vCV" secondAttribute="top" constant="6" id="NUQ-9k-HFv"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Wqs-fq-xen" secondAttribute="trailing" constant="8" id="PBA-Y2-dPp"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Wqs-fq-xen" secondAttribute="bottom" constant="6" id="fay-tU-b3m"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <accessibility key="accessibilityConfiguration" identifier="HouseTableViewCell"/>
+                                                <connections>
+                                                    <outlet property="arrowButton" destination="cUF-Fh-yp3" id="7xu-fn-ZSR"/>
+                                                    <outlet property="deleteButton" destination="z1k-U1-IJ9" id="n2J-dK-sHo"/>
+                                                    <outlet property="editButton" destination="wRk-NR-1xE" id="1JG-bX-HWY"/>
+                                                    <outlet property="nameLabel" destination="Mb6-Wv-X3O" id="BD6-DB-NLF"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Enter house nickname" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yMY-xz-CX7">
+                                        <rect key="frame" x="0.0" y="665.66666666666663" width="353" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gzC-NV-QaE">
+                                        <rect key="frame" x="0.0" y="703.66666666666663" width="353" height="34.333333333333371"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="+ New House"/>
+                                        <connections>
+                                            <action selector="addHousePressed:" destination="lv9-st-F65" eventType="touchUpInside" id="CzR-hq-L1P"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <viewLayoutGuide key="safeArea" id="WfZ-PU-D96"/>
+                                <constraints>
+                                    <constraint firstItem="0ic-xd-XyF" firstAttribute="top" secondItem="MtA-MB-bga" secondAttribute="bottom" constant="8" symbolic="YES" id="4cP-rf-lAE"/>
+                                    <constraint firstItem="yMY-xz-CX7" firstAttribute="top" secondItem="0ic-xd-XyF" secondAttribute="bottom" constant="8" symbolic="YES" id="ATj-zS-hhf"/>
+                                    <constraint firstItem="0ic-xd-XyF" firstAttribute="leading" secondItem="WfZ-PU-D96" secondAttribute="leading" constant="1" id="ZLe-dB-TeV"/>
+                                    <constraint firstItem="0ic-xd-XyF" firstAttribute="trailing" secondItem="WfZ-PU-D96" secondAttribute="trailing" constant="1" id="xHf-GV-Zky"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="9QQ-Pe-SxB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="HouseTableViewCell"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="yWi-aZ-j8r"/>
+                    <connections>
+                        <outlet property="allButton" destination="gXF-C7-Z9O" id="0dX-1B-718"/>
+                        <outlet property="doneButton" destination="LaQ-Ux-HA0" id="2Hc-VW-J9D"/>
+                        <outlet property="houseCountLabel" destination="TJQ-Hn-K8i" id="8Kw-rx-d6C"/>
+                        <outlet property="houseTableView" destination="0ic-xd-XyF" id="xB0-MN-ck7"/>
+                        <outlet property="newHouseButton" destination="gzC-NV-QaE" id="6Yi-ve-wKc"/>
+                        <outlet property="newHouseNameField" destination="yMY-xz-CX7" id="Oi6-6H-aY2"/>
+                        <outlet property="notStartedButton" destination="boJ-7k-W9Y" id="im3-Qx-TUB"/>
+                        <outlet property="progressButton" destination="KTp-rO-1PD" id="SGP-br-30s"/>
+                        <outlet property="searchBar" destination="CgS-7j-nm6" id="wOM-ni-cq1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iz7-tM-0w9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1049.6183206106871" y="130.98591549295776"/>
+        </scene>
         <!--Welcome View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -64,6 +285,7 @@
                     <connections>
                         <outlet property="nameField" destination="0fm-V0-x1d" id="HZ6-R4-s5m"/>
                         <outlet property="okButton" destination="yk6-Xq-cuY" id="fnO-qj-gM9"/>
+                        <segue destination="lv9-st-F65" kind="presentation" identifier="showHouseList" modalPresentationStyle="fullScreen" id="WHb-0U-vBX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
