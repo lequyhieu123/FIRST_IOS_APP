@@ -80,3 +80,95 @@ struct Room
         ]
     }
 }
+
+struct WindowSpace
+{
+    var documentID: String?
+    var name: String
+    var width: Double
+    var height: Double
+    var materialName: String
+    var materialPrice: Double
+
+    init(documentID: String? = nil,
+         name: String = "",
+         width: Double = 0,
+         height: Double = 0,
+         materialName: String = "",
+         materialPrice: Double = 0)
+    {
+        self.documentID = documentID
+        self.name = name
+        self.width = width
+        self.height = height
+        self.materialName = materialName
+        self.materialPrice = materialPrice
+    }
+
+    init(documentID: String, data: [String: Any])
+    {
+        self.documentID = documentID
+        self.name = data["name"] as? String ?? ""
+        self.width = data["width"] as? Double ?? 0
+        self.height = data["height"] as? Double ?? 0
+        self.materialName = data["materialName"] as? String ?? ""
+        self.materialPrice = data["materialPrice"] as? Double ?? 0
+    }
+
+    func toDictionary() -> [String: Any]
+    {
+        return [
+            "name": name,
+            "width": width,
+            "height": height,
+            "materialName": materialName,
+            "materialPrice": materialPrice
+        ]
+    }
+}
+
+struct FloorSpace
+{
+    var documentID: String?
+    var name: String
+    var width: Double
+    var length: Double
+    var materialName: String
+    var materialPrice: Double
+
+    init(documentID: String? = nil,
+         name: String = "",
+         width: Double = 0,
+         length: Double = 0,
+         materialName: String = "",
+         materialPrice: Double = 0)
+    {
+        self.documentID = documentID
+        self.name = name
+        self.width = width
+        self.length = length
+        self.materialName = materialName
+        self.materialPrice = materialPrice
+    }
+
+    init(documentID: String, data: [String: Any])
+    {
+        self.documentID = documentID
+        self.name = data["name"] as? String ?? ""
+        self.width = data["width"] as? Double ?? 0
+        self.length = data["length"] as? Double ?? 0
+        self.materialName = data["materialName"] as? String ?? ""
+        self.materialPrice = data["materialPrice"] as? Double ?? 0
+    }
+
+    func toDictionary() -> [String: Any]
+    {
+        return [
+            "name": name,
+            "width": width,
+            "length": length,
+            "materialName": materialName,
+            "materialPrice": materialPrice
+        ]
+    }
+}
