@@ -7,19 +7,19 @@ struct House
     var nickname: String
     var customerName: String
     var address: String
-    var createdAt: Date?
+    var updatedAt: Date?
 
     init(documentID: String? = nil,
          nickname: String = "",
          customerName: String = "",
          address: String = "",
-         createdAt: Date? = nil)
+         updatedAt: Date? = nil)
     {
         self.documentID = documentID
         self.nickname = nickname
         self.customerName = customerName
         self.address = address
-        self.createdAt = createdAt
+        self.updatedAt = updatedAt
     }
 
     init(documentID: String, data: [String: Any])
@@ -29,13 +29,13 @@ struct House
         self.customerName = data["customerName"] as? String ?? ""
         self.address = data["address"] as? String ?? ""
 
-        if let timestamp = data["createdAt"] as? Timestamp
+        if let timestamp = data["updatedAt"] as? Timestamp
         {
-            self.createdAt = timestamp.dateValue()
+            self.updatedAt = timestamp.dateValue()
         }
         else
         {
-            self.createdAt = nil
+            self.updatedAt = nil
         }
     }
 
@@ -45,7 +45,7 @@ struct House
             "nickname": nickname,
             "customerName": customerName,
             "address": address,
-            "createdAt": createdAt ?? Date()
+            "updatedAt": updatedAt ?? Date()
         ]
     }
 }

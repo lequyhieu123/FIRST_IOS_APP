@@ -83,20 +83,24 @@ class HouseListViewController: UIViewController,
 
         if cleanName.isEmpty
         {
-            showMessage(title: "Missing name", message: "Please enter a house nickname.")
+            showMessage(
+                title: "Missing name",
+                message: "Please enter a house nickname."
+            )
             return
         }
 
         let db = Firestore.firestore()
 
-        let newHouse = House(
-            nickname: cleanName,
-            customerName: "",
-            address: "",
-            createdAt: Date()
-        )
+        let data: [String: Any] = [
+            "nickname": cleanName,
+            "customerName": "",
+            "address": "",
+            "createdAt": Date(),
+            "updatedAt": Date()
+        ]
 
-        db.collection("houses").addDocument(data: newHouse.toDictionary())
+        db.collection("houses").addDocument(data: data)
         { error in
 
             if let error = error
@@ -146,8 +150,6 @@ class HouseListViewController: UIViewController,
                 return
             }
 
-            let group = DispatchGroup()
-
             for document in documents
             {
                 let house = House(
@@ -156,20 +158,45 @@ class HouseListViewController: UIViewController,
                 )
 
                 self.houses.append(house)
-
-                group.enter()
-
-                self.loadHouseStatus(houseId: document.documentID)
-                { status in
-                    self.houseStatusMap[document.documentID] = status
-                    group.leave()
-                }
             }
 
-            group.notify(queue: .main)
+            // Sort by newest updated/opened/added first
+            self.houses.sort
+            { first, second in
+
+                let firstDate = first.updatedAt ?? Date.distantPast
+                let secondDate = second.updatedAt ?? Date.distantPast
+
+                return firstDate > secondDate
+            }
+
+            self.loadAllHouseStatuses()
+        }
+    }
+
+    func loadAllHouseStatuses()
+    {
+        let group = DispatchGroup()
+
+        for house in houses
+        {
+            guard let houseId = house.documentID else
             {
-                self.applySearchAndFilter()
+                continue
             }
+
+            group.enter()
+
+            loadHouseStatus(houseId: houseId)
+            { status in
+                self.houseStatusMap[houseId] = status
+                group.leave()
+            }
+        }
+
+        group.notify(queue: .main)
+        {
+            self.applySearchAndFilter()
         }
     }
 
@@ -259,6 +286,12 @@ class HouseListViewController: UIViewController,
     }
 
     func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 56
+    }
+
+    func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(
@@ -291,7 +324,7 @@ class HouseListViewController: UIViewController,
             cell.contentView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.25)
 
         default:
-            cell.contentView.backgroundColor = UIColor.white
+            cell.contentView.backgroundColor = UIColor.systemGray5
         }
 
         cell.editButton.tag = indexPath.row
@@ -365,7 +398,8 @@ class HouseListViewController: UIViewController,
             let db = Firestore.firestore()
 
             db.collection("houses").document(houseId).updateData([
-                "nickname": cleanName
+                "nickname": cleanName,
+                "updatedAt": Date()
             ])
             { error in
 
@@ -433,6 +467,24 @@ class HouseListViewController: UIViewController,
     @objc func openHousePressed(_ sender: UIButton)
     {
         let house = filteredHouses[sender.tag]
+
+        if let houseId = house.documentID
+        {
+            Firestore.firestore()
+                .collection("houses")
+                .document(houseId)
+                .updateData([
+                    "updatedAt": Date()
+                ])
+            { error in
+
+                if let error = error
+                {
+                    print("Error updating opened house time: \(error)")
+                }
+            }
+        }
+
         performSegue(withIdentifier: "showHouseDetail", sender: house)
     }
 
