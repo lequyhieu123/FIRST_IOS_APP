@@ -6,6 +6,7 @@ class QuoteViewController: UIViewController
     @IBOutlet weak var customerInfoLabel: UILabel!
     @IBOutlet weak var quoteTextView: UITextView!
     @IBOutlet weak var houseTotalLabel: UILabel!
+    @IBOutlet weak var quoteStatusLabel: UILabel!
 
     var house: House?
 
@@ -20,6 +21,7 @@ class QuoteViewController: UIViewController
 
         quoteTextView.isEditable = false
         quoteTextView.text = ""
+        quoteStatusLabel.text = "Quote Status: Not calculated yet."
 
         loadQuote()
     }
@@ -46,6 +48,7 @@ class QuoteViewController: UIViewController
         let customerInfo = customerInfoLabel.text ?? ""
         let quoteDetails = quoteTextView.text ?? ""
         let houseTotalText = houseTotalLabel.text ?? ""
+        let quoteStatusText = quoteStatusLabel.text ?? ""
 
         let shareText =
         """
@@ -56,16 +59,9 @@ class QuoteViewController: UIViewController
         \(quoteDetails)
 
         \(houseTotalText)
-        """
 
-        if shareText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        {
-            showMessage(
-                title: "Nothing to Share",
-                message: "There is no quote data to share."
-            )
-            return
-        }
+        \(quoteStatusText)
+        """
 
         let activityViewController = UIActivityViewController(
             activityItems: [shareText],
@@ -94,6 +90,7 @@ class QuoteViewController: UIViewController
             customerInfoLabel.text = "No house selected."
             quoteTextView.text = ""
             houseTotalLabel.text = "House Total: $0.00"
+            quoteStatusLabel.text = "Quote Status: No quote available."
             return
         }
 
@@ -109,6 +106,7 @@ class QuoteViewController: UIViewController
         {
             quoteTextView.text = "Missing house ID."
             houseTotalLabel.text = "House Total: $0.00"
+            quoteStatusLabel.text = "Quote Status: No quote available."
             return
         }
 
@@ -124,6 +122,8 @@ class QuoteViewController: UIViewController
             {
                 print("Error loading rooms for quote: \(error)")
                 self.quoteTextView.text = "Error loading quote."
+                self.houseTotalLabel.text = "House Total: $0.00"
+                self.quoteStatusLabel.text = "Quote Status: Error loading quote."
                 return
             }
 
@@ -133,6 +133,7 @@ class QuoteViewController: UIViewController
             {
                 self.quoteTextView.text = "No rooms found."
                 self.houseTotalLabel.text = "House Total: $0.00"
+                self.quoteStatusLabel.text = "Quote Status: No rooms available."
                 return
             }
 
@@ -164,6 +165,8 @@ class QuoteViewController: UIViewController
                     format: "House Total: $%.2f",
                     self.houseTotal
                 )
+
+                self.updateQuoteStatus()
             }
         }
     }
@@ -295,27 +298,39 @@ class QuoteViewController: UIViewController
         }
     }
 
+    func updateQuoteStatus()
+    {
+        if houseTotal >= 5000
+        {
+            quoteStatusLabel.text =
+            """
+            Quote Status: High Cost Project
+            Warning: This quote is above $5,000.
+            Suggestion: Review premium materials before confirming.
+            """
+        }
+        else if houseTotal >= 2000
+        {
+            quoteStatusLabel.text =
+            """
+            Quote Status: Medium Cost Project
+            Note: This quote is within a moderate price range.
+            """
+        }
+        else
+        {
+            quoteStatusLabel.text =
+            """
+            Quote Status: Low Cost Project
+            Note: This quote is relatively affordable.
+            """
+        }
+    }
+
     func getTodayDate() -> String
     {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter.string(from: Date())
-    }
-
-    func showMessage(title: String, message: String)
-    {
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert
-        )
-
-        alert.addAction(UIAlertAction(
-            title: "OK",
-            style: .default,
-            handler: nil
-        ))
-
-        present(alert, animated: true, completion: nil)
     }
 }

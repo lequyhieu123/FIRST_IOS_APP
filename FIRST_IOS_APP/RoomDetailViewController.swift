@@ -49,11 +49,6 @@ class RoomDetailViewController: UIViewController,
         roomImageView.contentMode = .scaleAspectFit
         roomImageView.clipsToBounds = true
 
-        print("Room Detail opened")
-        print("House ID:", house?.documentID ?? "NO HOUSE ID")
-        print("Room ID:", room?.documentID ?? "NO ROOM ID")
-        print("Room name:", room?.name ?? "NO ROOM NAME")
-
         loadWindows()
         loadFloors()
         loadRoomImage()
@@ -240,7 +235,6 @@ class RoomDetailViewController: UIViewController,
             self.windows.removeAll()
 
             let documents = result?.documents ?? []
-            print("Window documents found:", documents.count)
 
             for document in documents
             {
@@ -276,7 +270,6 @@ class RoomDetailViewController: UIViewController,
             self.floors.removeAll()
 
             let documents = result?.documents ?? []
-            print("Floor documents found:", documents.count)
 
             for document in documents
             {
@@ -529,7 +522,7 @@ class RoomDetailViewController: UIViewController,
 
         alert.addTextField
         { textField in
-            textField.placeholder = "Width"
+            textField.placeholder = "Width in mm"
             textField.keyboardType = .decimalPad
 
             if let width = window?.width
@@ -540,7 +533,7 @@ class RoomDetailViewController: UIViewController,
 
         alert.addTextField
         { textField in
-            textField.placeholder = "Height"
+            textField.placeholder = "Height in mm"
             textField.keyboardType = .decimalPad
 
             if let height = window?.height
@@ -564,25 +557,27 @@ class RoomDetailViewController: UIViewController,
             let widthText = alert.textFields?[1].text ?? ""
             let heightText = alert.textFields?[2].text ?? ""
 
-            let cleanName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+            let validation = self.validateMeasurementInput(
+                name: name,
+                widthText: widthText,
+                secondText: heightText,
+                secondFieldName: "Height"
+            )
 
-            guard let width = Double(widthText),
-                  let height = Double(heightText),
-                  !cleanName.isEmpty
-            else
+            if validation.isValid == false
             {
                 self.showMessage(
                     title: "Invalid input",
-                    message: "Please enter valid window details."
+                    message: validation.message
                 )
                 return
             }
 
             let newWindow = WindowSpace(
                 documentID: window?.documentID,
-                name: cleanName,
-                width: width,
-                height: height,
+                name: validation.cleanName,
+                width: validation.width,
+                height: validation.secondValue,
                 materialName: selectedMaterial.name,
                 materialPrice: selectedMaterial.price
             )
@@ -612,7 +607,7 @@ class RoomDetailViewController: UIViewController,
 
         alert.addTextField
         { textField in
-            textField.placeholder = "Width"
+            textField.placeholder = "Width in mm"
             textField.keyboardType = .decimalPad
 
             if let width = floor?.width
@@ -623,7 +618,7 @@ class RoomDetailViewController: UIViewController,
 
         alert.addTextField
         { textField in
-            textField.placeholder = "Length"
+            textField.placeholder = "Length in mm"
             textField.keyboardType = .decimalPad
 
             if let length = floor?.length
@@ -647,25 +642,27 @@ class RoomDetailViewController: UIViewController,
             let widthText = alert.textFields?[1].text ?? ""
             let lengthText = alert.textFields?[2].text ?? ""
 
-            let cleanName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+            let validation = self.validateMeasurementInput(
+                name: name,
+                widthText: widthText,
+                secondText: lengthText,
+                secondFieldName: "Length"
+            )
 
-            guard let width = Double(widthText),
-                  let length = Double(lengthText),
-                  !cleanName.isEmpty
-            else
+            if validation.isValid == false
             {
                 self.showMessage(
                     title: "Invalid input",
-                    message: "Please enter valid floor details."
+                    message: validation.message
                 )
                 return
             }
 
             let newFloor = FloorSpace(
                 documentID: floor?.documentID,
-                name: cleanName,
-                width: width,
-                length: length,
+                name: validation.cleanName,
+                width: validation.width,
+                length: validation.secondValue,
                 materialName: selectedMaterial.name,
                 materialPrice: selectedMaterial.price
             )
@@ -674,6 +671,47 @@ class RoomDetailViewController: UIViewController,
         })
 
         present(alert, animated: true, completion: nil)
+    }
+
+    func validateMeasurementInput(name: String,
+                                  widthText: String,
+                                  secondText: String,
+                                  secondFieldName: String)
+    -> (isValid: Bool, message: String, cleanName: String, width: Double, secondValue: Double)
+    {
+        let cleanName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if cleanName.isEmpty
+        {
+            return (false, "Name cannot be empty.", "", 0, 0)
+        }
+
+        if cleanName.count < 2
+        {
+            return (false, "Name must be at least 2 characters.", "", 0, 0)
+        }
+
+        guard let width = Double(widthText) else
+        {
+            return (false, "Width must be a valid number.", "", 0, 0)
+        }
+
+        guard let secondValue = Double(secondText) else
+        {
+            return (false, "\(secondFieldName) must be a valid number.", "", 0, 0)
+        }
+
+        if width <= 0 || secondValue <= 0
+        {
+            return (false, "Measurements must be greater than 0.", "", 0, 0)
+        }
+
+        if width > 20000 || secondValue > 20000
+        {
+            return (false, "Measurements seem too large. Please enter values under 20000 mm.", "", 0, 0)
+        }
+
+        return (true, "", cleanName, width, secondValue)
     }
 
     func saveWindow(_ window: WindowSpace)
