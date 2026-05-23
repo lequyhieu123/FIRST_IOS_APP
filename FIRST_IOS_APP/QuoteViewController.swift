@@ -43,19 +43,48 @@ class QuoteViewController: UIViewController
 
     @IBAction func printReceiptPressed(_ sender: Any)
     {
-        let alert = UIAlertController(
-            title: "Print Receipt",
-            message: "Receipt printing is simulated for this demo.",
-            preferredStyle: .alert
+        let customerInfo = customerInfoLabel.text ?? ""
+        let quoteDetails = quoteTextView.text ?? ""
+        let houseTotalText = houseTotalLabel.text ?? ""
+
+        let shareText =
+        """
+        QUOTE RECEIPT
+
+        \(customerInfo)
+
+        \(quoteDetails)
+
+        \(houseTotalText)
+        """
+
+        if shareText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        {
+            showMessage(
+                title: "Nothing to Share",
+                message: "There is no quote data to share."
+            )
+            return
+        }
+
+        let activityViewController = UIActivityViewController(
+            activityItems: [shareText],
+            applicationActivities: nil
         )
 
-        alert.addAction(UIAlertAction(
-            title: "OK",
-            style: .default,
-            handler: nil
-        ))
+        if let popover = activityViewController.popoverPresentationController
+        {
+            popover.sourceView = self.view
+            popover.sourceRect = CGRect(
+                x: self.view.bounds.midX,
+                y: self.view.bounds.midY,
+                width: 0,
+                height: 0
+            )
+            popover.permittedArrowDirections = []
+        }
 
-        present(alert, animated: true, completion: nil)
+        present(activityViewController, animated: true, completion: nil)
     }
 
     func loadQuote()
@@ -271,5 +300,22 @@ class QuoteViewController: UIViewController
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter.string(from: Date())
+    }
+
+    func showMessage(title: String, message: String)
+    {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(
+            title: "OK",
+            style: .default,
+            handler: nil
+        ))
+
+        present(alert, animated: true, completion: nil)
     }
 }

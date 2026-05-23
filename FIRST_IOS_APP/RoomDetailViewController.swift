@@ -3,11 +3,16 @@ import FirebaseFirestore
 
 class RoomDetailViewController: UIViewController,
                                 UITableViewDataSource,
-                                UITableViewDelegate
+                                UITableViewDelegate,
+                                UIImagePickerControllerDelegate,
+                                UINavigationControllerDelegate
 {
     @IBOutlet weak var roomNameLabel: UILabel!
     @IBOutlet weak var windowTableView: UITableView!
     @IBOutlet weak var floorTableView: UITableView!
+
+    @IBOutlet weak var roomImageView: UIImageView!
+    @IBOutlet weak var choosePhotoButton: UIButton!
 
     var house: House?
     var room: Room?
@@ -41,6 +46,9 @@ class RoomDetailViewController: UIViewController,
 
         roomNameLabel.text = room?.name
 
+        roomImageView.contentMode = .scaleAspectFit
+        roomImageView.clipsToBounds = true
+
         print("Room Detail opened")
         print("House ID:", house?.documentID ?? "NO HOUSE ID")
         print("Room ID:", room?.documentID ?? "NO ROOM ID")
@@ -48,6 +56,7 @@ class RoomDetailViewController: UIViewController,
 
         loadWindows()
         loadFloors()
+        loadRoomImage()
     }
 
     override func viewWillAppear(_ animated: Bool)
@@ -55,6 +64,7 @@ class RoomDetailViewController: UIViewController,
         super.viewWillAppear(animated)
         loadWindows()
         loadFloors()
+        loadRoomImage()
     }
 
     @IBAction func backPressed(_ sender: Any)
@@ -77,6 +87,116 @@ class RoomDetailViewController: UIViewController,
     @IBAction func addFloorPressed(_ sender: Any)
     {
         chooseFloorMaterial(floor: nil)
+    }
+
+    @IBAction func choosePhotoPressed(_ sender: Any)
+    {
+        print("Choose photo button clicked")
+
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
+        {
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .photoLibrary
+            picker.allowsEditing = false
+
+            present(picker, animated: true, completion: nil)
+        }
+        else
+        {
+            showMessage(
+                title: "Photo Library Unavailable",
+                message: "The photo library is not available on this device."
+            )
+        }
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
+    {
+        picker.dismiss(animated: true, completion: nil)
+
+        guard let selectedImage = info[.originalImage] as? UIImage else
+        {
+            showMessage(
+                title: "Image Error",
+                message: "Could not select this image."
+            )
+            return
+        }
+
+        roomImageView.image = selectedImage
+        saveRoomImageToFirestore(selectedImage)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
+    {
+        picker.dismiss(animated: true, completion: nil)
+    }
+
+    func saveRoomImageToFirestore(_ image: UIImage)
+    {
+        guard let roomRef = roomReference() else
+        {
+            return
+        }
+
+        guard let imageData = image.jpegData(compressionQuality: 0.20) else
+        {
+            return
+        }
+
+        let base64String = imageData.base64EncodedString()
+
+        roomRef.updateData([
+            "photoBase64": base64String
+        ])
+        { error in
+
+            if let error = error
+            {
+                print("Error saving room photo: \(error)")
+            }
+            else
+            {
+                print("Room photo saved")
+            }
+        }
+    }
+
+    func loadRoomImage()
+    {
+        guard let roomRef = roomReference() else
+        {
+            return
+        }
+
+        roomRef.getDocument()
+        { document, error in
+
+            if let error = error
+            {
+                print("Error loading room photo: \(error)")
+                return
+            }
+
+            guard let data = document?.data() else
+            {
+                return
+            }
+
+            guard let base64String = data["photoBase64"] as? String else
+            {
+                return
+            }
+
+            guard let imageData = Data(base64Encoded: base64String) else
+            {
+                return
+            }
+
+            self.roomImageView.image = UIImage(data: imageData)
+        }
     }
 
     func roomReference() -> DocumentReference?
