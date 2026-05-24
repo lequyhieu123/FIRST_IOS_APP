@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08374A362FC2F04C00C98EA2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 08374A352FC2F04000C98EA2 /* README.md */; };
 		0865AFB62FB9802C00F0622B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0865AFB52FB9802C00F0622B /* FirebaseAnalytics */; };
 		0865AFB82FB9802C00F0622B /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 0865AFB72FB9802C00F0622B /* FirebaseAnalyticsOnDeviceConversion */; };
 		0865AFBA2FB9802C00F0622B /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 0865AFB92FB9802C00F0622B /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08374A352FC2F04000C98EA2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0865AF982FB9726800F0622B /* FIRST_IOS_APP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FIRST_IOS_APP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -96,6 +98,7 @@
 		0865AF8F2FB9726800F0622B = {
 			isa = PBXGroup;
 			children = (
+				08374A352FC2F04000C98EA2 /* README.md */,
 				0865AF9A2FB9726800F0622B /* FIRST_IOS_APP */,
 				0865AF992FB9726800F0622B /* Products */,
 			);
@@ -200,6 +203,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08374A362FC2F04C00C98EA2 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
